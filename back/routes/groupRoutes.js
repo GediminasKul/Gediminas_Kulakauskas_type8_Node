@@ -1,6 +1,6 @@
 const express = require('express');
 const { validateToken } = require('../middleware');
-const { getAllGroups, postNewGroup } = require('../model/groupModel');
+const { getAllGroups, postNewGroup } = require('../model/groupsModel');
 
 const groupRoutes = express.Router();
 

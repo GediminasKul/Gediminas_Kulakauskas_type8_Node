@@ -19,7 +19,7 @@ async function getGroups() {
 }
 
 //papostinti grupes
-async function postGroup(name) {
+async function postGroups(name) {
   let conn;
   try {
     conn = await mysql.createConnection(dbConfig);
@@ -35,5 +35,5 @@ async function postGroup(name) {
 
 module.exports = {
   getGroups,
-  postGroup,
+  postGroups,
 };

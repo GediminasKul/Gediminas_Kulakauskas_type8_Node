@@ -1,11 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const groupRoutes = require('../back/routes/');
-const accountRoutes = require('./routes/accountRoutes');
-const billsRoutes = require('./routes/billsRoutes');
+const groupRoutes = require('../back/routes/groupRoutes');
+const accountRoutes = require('../back/routes/accountsRoutes');
+const billsRoutes = require('../back/routes/billsRoutes');
 const { PORT } = require('./config');
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('../back/routes/userRoutes');
 
 const app = express();
 

@@ -1,63 +1,55 @@
+/* eslint-disable camelcase */
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { jwtSecret } = require('../config');
+const { regUser, loginUser } = require('../model/userModel');
+const { validateRegisteredUser, validateLoginUser } = require('../middleware');
+
 const userRoutes = express.Router();
 
-userRoutes.get('/art', async (req, res) => {
-  // panaudoti getArticlesDb
+userRoutes.post('/registration', validateRegisteredUser, async (req, res) => {
   try {
-    const artArr = await getArticlesDB();
-    res.json(artArr);
+    const { full_name, email, password } = req.body;
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    const newUser = {
+      full_name,
+      email,
+      password: hashedPassword,
+    };
+    await regUser(newUser.full_name, newUser.email, newUser.password);
+    res
+      .status(201)
+      .json({ success: true, message: 'User registration successful' });
   } catch (error) {
-    console.log('error ===', error);
-    res.sendStatus(500);
+    res.status(500).json({ success: false, message: error });
   }
 });
 
-// POST /register - gaunam email ir password
-userRoutes.post('/register', validateUser, async (req, res) => {
-  const newUser = req.body;
-  // hash password (bcryptjs)
-  newUser.password = hashPassword(newUser.password);
-  // saveToDb(newUser);
+userRoutes.post('/login', validateLoginUser, async (req, res) => {
   try {
-    const sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
-    const saveResult = await executeDb(sql, [newUser.email, newUser.password]);
-    if (saveResult.affectedRows === 1) {
-      res.sendStatus(201);
+    const { email, password } = req.body;
+    const [loginResult] = await loginUser(email);
+    if (!loginResult) {
+      res
+        .status(500)
+        .json({ success: false, message: 'email or password incorrect' });
       return;
     }
-    res.status(400).json('no user created');
+    if (!bcrypt.compareSync(password, loginResult.password)) {
+      res
+        .status(500)
+        .json({ success: false, message: 'email or password incorrect' });
+      return;
+    }
+    const paylod = { userId: loginResult.id };
+    const token = jwt.sign(paylod, jwtSecret, { expiresIn: '1h' });
+
+    // eslint-disable-next-line object-curly-newline
+    res.json({ success: true, msg: 'login success', paylod, token });
   } catch (error) {
-    console.log('POST /register ===', error);
-    if (error.code === 'ER_DUP_ENTRY') {
-      res.status(400).json('user alredy exists');
-      return;
-    }
-
-    res.sendStatus(500);
+    res.status(500).json({ success: false, message: 'something went wrong' });
   }
-});
-
-userRoutes.post('/login', validateUser, async (req, res) => {
-  const gautasEmail = req.body.email;
-  const gautasSlaptazodis = req.body.password;
-
-  const foundUserArr = await findUserByEmail(gautasEmail);
-
-  const foundUser = foundUserArr[0];
-  console.log('foundUser ===', foundUser);
-
-  if (!foundUser) {
-    res.status(400).json('email or password not found (email)');
-    return;
-  }
-  if (!passWordsMatch(gautasSlaptazodis, foundUser.password)) {
-    res.status(400).json('email or password not found (pass)');
-    return;
-  }
-
-  const payload = { userId: foundUser.id };
-  const token = generateJwtToken(payload);
-
-  res.json({ success: true, token });
 });
 
 module.exports = userRoutes;
