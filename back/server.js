@@ -1,26 +1,31 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const groupRoutes = require('../back/routes/');
+const accountRoutes = require('./routes/accountRoutes');
+const billsRoutes = require('./routes/billsRoutes');
 const { PORT } = require('./config');
-// const userRoutes = require('./routes/userRoutes');
-// const articleRoutes = require('./routes/articleRoutes');
-
-// const mysql = require('mysql2/promise');
-// const dbConfig = require('./dbConfig');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-// middleware
+// MiddleWare
 app.use(morgan('dev'));
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Hello express');
+app.get('/', (req, res) => res.json('Up and running!'));
+
+app.use('/api', userRoutes);
+app.use('/api', accountRoutes);
+app.use('/api', billsRoutes);
+app.use('/api', groupRoutes);
+
+// 404 route
+app.all('*', (req, res) => {
+  res.status(404).json({
+    err: 'Something is not working!',
+  });
 });
 
-// Routes
-// app.use('/', userRoutes);
-// app.use('/', articleRoutes);
-
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+app.listen(PORT, () => console.log('server is up and running, PORT', PORT));
