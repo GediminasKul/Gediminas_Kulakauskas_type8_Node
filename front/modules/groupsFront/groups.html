@@ -4,7 +4,55 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Groups</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module" src="./groups.js" defer></script>
+    <link rel="stylesheet" href="./groups.css" />
   </head>
-  <body></body>
+  <body>
+    <header class="header">
+      <div class="headerDiv">
+        <nav class="navbar">
+          <a href="./groups.html" class="active">Groups</a>
+          <a href="#" class="signout">Sign out</a>
+        </nav>
+      </div>
+    </header>
+    <div class="hero">
+      <h1>Adding users to Group(s)</h1>
+    </div>
+    <section class="cardSection">
+      <h3>Select your group</h3>
+      <div class="grid"></div>
+    </section>
+    <article class="groupArticle">
+      <div class="forms">
+        <form class="addToGroup">
+          <h3>Add user to group</h3>
+          <label for="group">Group ID:</label>
+          <select name="group" id="group"></select>
+          <span class="errorSpan"></span>
+          <button type="submit">Add</button>
+        </form>
+        <form class="addNewGroup">
+          <h3>Add a new group</h3>
+          <label for="groupName">Group name</label>
+          <input
+            type="text"
+            id="groupName"
+            name="groupName"
+            placeholder="Type your new group name"
+          />
+          <button type="submit">Add</button>
+        </form>
+      </div>
+    </article>
+  </body>
 </html>

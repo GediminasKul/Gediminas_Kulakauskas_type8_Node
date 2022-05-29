@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import { clearErrorsArr, errorsArr, checkInput } from '../model/validation.js';
+import { clearErrorsArr, errorsArr, checkInput } from '../validation.js';
 
 const BASE_URL = 'http://localhost:3000';
 

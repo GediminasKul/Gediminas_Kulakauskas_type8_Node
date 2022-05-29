@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import { fetchBills, AddNewBill } from '../model/billsModel.js';
+import { fetchBills, AddNewBill } from '../billsModel.js';
 
 const groupId = window.location.search.split('=')[1];
 const BASE_URL = 'http://localhost:3000';
@@ -8,9 +8,9 @@ const tableEl = document.querySelector('.table');
 const formEl = document.querySelector('.form');
 const signoutEl = document.querySelector('.signout');
 
-if (!token) {
-  window.location.replace('../login/index.html');
-}
+// if (!token) {
+//   window.location.replace('../loginFront/index.html');
+// }
 
 signoutEl.addEventListener('click', () => {
   localStorage.removeItem('userToken');

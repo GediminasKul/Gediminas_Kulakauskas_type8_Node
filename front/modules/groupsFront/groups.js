@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import { fetchAccountGroups, getAllGroups } from '../groupModel';
+import { fetchAccountGroups, getAllGroups } from '../groupModel.js';
 /* eslint-disable no-param-reassign */
 const gridEl = document.querySelector('.grid');
 const BASE_URL = 'http://localhost:3000';
@@ -10,9 +10,9 @@ const inpEl = document.getElementById('groupName');
 const addNewGroupForm = document.querySelector('.addNewGroup');
 const signoutEl = document.querySelector('.signout');
 
-if (!token) {
-  window.location.replace('../login/index.html');
-}
+// if (!token) {
+//   window.location.replace('');
+// }
 
 signoutEl.addEventListener('click', () => {
   localStorage.removeItem('userToken');
