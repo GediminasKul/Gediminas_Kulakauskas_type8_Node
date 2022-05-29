@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bills</title>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script type="module" src="./bills.js" defer></script>
+    <link rel="stylesheet" href="./bills.css" defer />
+  </head>
+  <body>
+    <div class="bigSection">
+      <header class="header">
+        <div class="headerDiv">
+          <nav class="navbar">
+            <a href="../groups/groups.html" class="active">Groups</a>
+            <a href="#" class="signout">Sign out</a>
+          </nav>
+        </div>
+      </header>
+      <div class="hero">
+        <h1>Split Bill</h1>
+      </div>
+      <section class="tableSection">
+        <h2></h2>
+        <h3>Group's bills:</h3>
+        <table class="table"></table>
+      </section>
+      <article class="formArticle">
+        <form class="form">
+          <h3>Add bill(s) of your choosing.</h3>
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" name="amount" />
+          <label for="description">Description</label>
+          <input type="text" id="description" name="description" />
+          <button type="submit">Add</button>
+        </form>
+      </article>
+    </div>
+  </body>
+</html>
